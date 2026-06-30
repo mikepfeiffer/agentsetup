@@ -23,9 +23,10 @@ in every session, regardless of launch directory or compaction.
   files marked `# @generated` are produced by tooling — edit the source instead.
 - **IMPORTANT: Never commit secrets.** No keys, tokens, or `.env` values in code,
   tests, or fixtures. Use placeholders.
-- **IMPORTANT: Money is integer minor units (cents), never floats.** Any code
-  handling money follows the payments rules — see
-  `examples/payments-app/AGENTS.md` before touching it.
+- **IMPORTANT: Never use binary floats (`float`/`double`/JS `number`) for money.**
+  Use an exact type, following the rule in the example you're in — integer minor
+  units in `examples/payments-app/AGENTS.md`, `decimal` in
+  `examples/catalog-api/AGENTS.md`.
 - **IMPORTANT: Never force-push shared branches** (`main`, `release/*`).
 
 ## Module map
