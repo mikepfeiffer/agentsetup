@@ -9,16 +9,22 @@ to keep one source of truth for agent instructions without symlinks.
 ```text
 AGENTS.md / CLAUDE.md       # shared instruction layer (§1) — root source of truth + stub
 examples/                   # each app is a self-contained project you launch into (§5)
-  payments-app/
-    AGENTS.md / CLAUDE.md   # this app's instructions (inherit root + add stricter rules)
-    .agent-hooks/           # this app's deterministic hook implementation (§5)
-    .claude/settings.json   # Claude Code hook adapter -> .agent-hooks
-    .codex/hooks.json       # Codex hook adapter        -> .agent-hooks
-    src/ test/              # a small, working TypeScript app
+  payments-app/             # TypeScript: idempotent, integer-cents charge ledger
+    AGENTS.md / CLAUDE.md   #   its instructions (inherit root + add stricter rules)
+    .agent-hooks/           #   its deterministic hook implementation (§5)
+    .claude/settings.json   #   Claude Code hook adapter -> .agent-hooks
+    .codex/hooks.json       #   Codex hook adapter        -> .agent-hooks
+    src/ test/              #   the app
+  catalog-api/              # ASP.NET Core + EF Core: product catalog API
+    AGENTS.md / CLAUDE.md   #   same patterns, .NET-specific rules & hook policy
+    .agent-hooks/ .claude/ .codex/
+    src/ tests/
 ```
 
 The repo **root is documentation + the shared instruction layer**; it has no
-hooks of its own. Hooks are demonstrated **per example** (§5).
+hooks of its own. Each example is self-contained and may wire up **different**
+rules and hooks — the patterns repeat, the content varies. Hooks are demonstrated
+**per example** (§5).
 
 ---
 

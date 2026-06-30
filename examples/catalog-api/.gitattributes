@@ -1,0 +1,9 @@
+# Self-contained line-ending normalization for this .NET example. The shared
+# stop-validate hook checks that *.md/*.json/*.mjs are LF here.
+*.md      text eol=lf
+*.json    text eol=lf
+*.mjs     text eol=lf
+*.cs      text eol=lf
+*.csproj  text eol=lf
+# Visual Studio writes solution files with CRLF — keep that to avoid churn.
+*.sln     text eol=crlf

@@ -1,0 +1,7 @@
+# Build output and the local SQLite database. bin/ and obj/ are also blocked by
+# the shared PreToolUse hook, so an agent shouldn't edit them either.
+bin/
+obj/
+*.db
+*.db-shm
+*.db-wal

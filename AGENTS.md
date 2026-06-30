@@ -5,12 +5,13 @@
 > `CLAUDE.md` → `@AGENTS.md`. One source of truth, **no symlinks** (Windows-safe).
 
 ## Repo-wide conventions
-- **Language:** TypeScript / Node (Node 20+). Use explicit types on public APIs.
-  Each example's hook tooling is plain Node ESM with no dependencies.
-- **Format / lint:** `npm run typecheck` in an example (placeholder for a future
-  eslint/prettier pass).
-- **Test:** `npm run test:example` from root, or `cd examples/<app> && npm test`
-  (which runs both the app tests and that example's hook tests).
+- **Language:** per example — TypeScript/Node (`payments-app`) or C#/.NET
+  (`catalog-api`). Every example's hook tooling is plain Node ESM, no dependencies.
+- **Format / lint:** an example's own check (e.g. `npm run typecheck` or
+  `dotnet build`) — placeholder for a future eslint/prettier/analyzer pass.
+- **Test:** `cd examples/<app>` and run its app tests (`npm test` or
+  `dotnet test`) plus its hook tests (`npm run test:hooks`). Root delegates:
+  `npm run test:payments-app`, `npm run test:catalog-api`.
 - **Commits:** Conventional Commits (`feat:`, `fix:`, `chore:`). Keep them atomic.
 - **PRs:** Small and focused. Describe what changed and why; link the issue.
 
@@ -31,8 +32,10 @@ in every session, regardless of launch directory or compaction.
 More specific guidance lives next to the code. Read the module file before
 editing within it. Each example is a self-contained project — **launch the agent
 from inside it** so its hooks are active.
-- `examples/payments-app/AGENTS.md` — the reference app (integer-cents,
-  idempotent charge ledger); stricter, module-specific rules.
-- `examples/payments-app/.agent-hooks/README.md` — that example's deterministic
-  hook layer (one implementation, a `.claude/` and a `.codex/` adapter). The repo
-  root has no hooks of its own; see README §5.
+- `examples/payments-app/AGENTS.md` — TypeScript reference (integer-cents,
+  idempotent charge ledger); stricter, module-specific rules + its own hooks.
+- `examples/catalog-api/AGENTS.md` — ASP.NET Core + EF Core reference (decimal
+  money, "never hand-edit migrations", ProblemDetails) + its own .NET hook policy.
+- `examples/<app>/.agent-hooks/README.md` — that example's deterministic hook
+  layer (one implementation, a `.claude/` and a `.codex/` adapter). The repo root
+  has no hooks of its own; see README §5.

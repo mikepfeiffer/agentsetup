@@ -5,7 +5,7 @@
   "description": "Reference repo for sharing agent instructions and hooks across Claude Code and OpenAI Codex.",
   "type": "module",
   "scripts": {
-    "build:example": "npm --prefix examples/payments-app run build",
-    "test:example": "npm --prefix examples/payments-app test"
+    "test:payments-app": "npm --prefix examples/payments-app test",
+    "test:catalog-api": "dotnet test examples/catalog-api/CatalogApi.sln && npm --prefix examples/catalog-api run test:hooks"
   }
 }

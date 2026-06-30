@@ -1,0 +1,10 @@
+{
+  "name": "@agentsetup/catalog-api-hooks",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Hook tooling for the catalog-api example. The .NET app itself builds/tests with `dotnet`.",
+  "scripts": {
+    "test:hooks": "node .agent-hooks/agent-hook.test.mjs"
+  }
+}
