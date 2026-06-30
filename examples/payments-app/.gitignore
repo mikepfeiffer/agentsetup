@@ -1,0 +1,4 @@
+# Build output and dependencies — both are also blocked by the shared
+# PreToolUse hook (.agent-hooks/policy.json), so an agent shouldn't edit them.
+node_modules/
+dist/

@@ -1,5 +1,8 @@
-# Keep instruction and source files byte-identical across Windows and macOS.
-# Without this, Windows checkouts can introduce CRLF, causing noisy diffs and
-# subtly different files for a mixed-OS team.
-*.md  text eol=lf
-*.py  text eol=lf
+# Keep instruction, config, and source files byte-identical across Windows and
+# macOS. Without this, Windows checkouts can introduce CRLF, causing noisy diffs,
+# subtly different files for a mixed-OS team, and shell scripts/hooks that fail.
+*.md    text eol=lf
+*.py    text eol=lf
+*.ts    text eol=lf
+*.json  text eol=lf
+*.mjs   text eol=lf

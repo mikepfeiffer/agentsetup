@@ -1,0 +1,33 @@
+{
+  "blockedShellPatterns": [
+    "rm -rf /",
+    "rm -rf .",
+    "rm -rf *",
+    "sudo rm -rf",
+    "git reset --hard",
+    "git clean -fdx",
+    "git push --force",
+    "git push -f",
+    "del /s",
+    "rmdir /s",
+    "Remove-Item -Recurse -Force",
+    "format c:"
+  ],
+  "blockedPathPatterns": [
+    ".env",
+    ".env.*",
+    "*.pem",
+    "*.key",
+    "id_rsa",
+    "id_ed25519",
+    "secrets/",
+    ".secret/",
+    ".git/",
+    "node_modules/",
+    "dist/",
+    "build/",
+    "coverage/",
+    "bin/",
+    "obj/"
+  ]
+}

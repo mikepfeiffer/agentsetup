@@ -1,0 +1,17 @@
+{
+  "name": "@agentsetup/payments-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Reference app: an idempotent, integer-cents charge ledger that demonstrates the shared agent setup and hooks.",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "tsc && node --test dist/test",
+    "start": "node dist/src/cli.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.9.3"
+  }
+}
