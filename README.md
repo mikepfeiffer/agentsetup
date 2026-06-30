@@ -1,4 +1,4 @@
-# Agent Setup: Instructions & Guardrails for teams using both Claude Code & Codex
+# Agent Setup: Shared Instructions and Guardrails for Claude Code + Codex
 
 A friendly, copy-pasteable reference for setting up AI coding agents —
 **Claude Code** and **OpenAI Codex** (or either one on its own) — so your agent:
