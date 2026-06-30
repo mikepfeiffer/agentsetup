@@ -4,9 +4,9 @@ A friendly, copy-pasteable reference for setting up AI coding agents like
 **Claude Code** and **OpenAI Codex** (or either one on its own), so your agent:
 
 1. **Follows your project's rules**, and
-2. **Can't easily do risky things** — like deleting the wrong files, committing a
+2. **Can't easily do risky things** like deleting the wrong files, committing a
    password, or hand-editing auto-generated code, or
-3. **Consistently applies clean coding standards** - so your project does not drift into messy patterns and hard-to-maintain code.
+3. **Consistently applies clean coding standards** so your project does not drift into messy patterns and hard-to-maintain code.
 
 The goal is simple: give your AI coding agent clear instructions, practical guardrails, and repeatable standards before it starts changing your codebase.
 
