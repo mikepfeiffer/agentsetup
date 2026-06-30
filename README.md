@@ -1,6 +1,6 @@
 # Agent Setup: Shared Instructions and Guardrails for Claude Code + Codex
 
-This project is a reference for teams using both Claude Code and OpenAI Codex on the same repo, across both Windows and macOS, so your AI coding agents:
+This project is a reference for teams using Claude Code or OpenAI Codex on the same monorepo, across both Windows and macOS, so your AI coding agents:
 
 1. **Follow your project's rules**, and
 2. **Can't easily do risky things** like deleting the wrong files, committing a
