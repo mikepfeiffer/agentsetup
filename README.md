@@ -28,23 +28,6 @@ The difference matters: **instructions are advice the agent almost always
 follows; guardrails are a hard stop it can't talk its way around.** Good setups
 use both — instructions to guide, guardrails to catch the rare slip.
 
-> The rest of this page is the "how." Skim the section you care about — you don't
-> need to read all of it to get value.
-
-## Try it
-
-Pick the example closest to your stack, open that folder with your agent, and
-start building:
-
-```bash
-cd examples/payments-app    # TypeScript   (or: cd examples/catalog-api for C#)
-claude                      # or: codex
-```
-
-Because you launched *inside* the example, the agent automatically reads that
-project's rules and runs its guardrails. Make a normal edit and it goes through;
-try something risky (touching a secret file, a generated file, `git push
---force`) and the guardrail blocks it.
 
 ## What's in this repo
 
