@@ -1,0 +1,31 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Edit|Write|apply_patch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$(git rev-parse --show-toplevel)/examples/payments-app/.agent-hooks/agent-hook.mjs\" pre-tool-policy",
+            "command_windows": "for /f \"delims=\" %i in ('git rev-parse --show-toplevel') do node \"%i\\examples\\payments-app\\.agent-hooks\\agent-hook.mjs\" pre-tool-policy",
+            "timeout": 30,
+            "statusMessage": "Checking repository hook policy"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$(git rev-parse --show-toplevel)/examples/payments-app/.agent-hooks/agent-hook.mjs\" stop-validate",
+            "command_windows": "for /f \"delims=\" %i in ('git rev-parse --show-toplevel') do node \"%i\\examples\\payments-app\\.agent-hooks\\agent-hook.mjs\" stop-validate",
+            "timeout": 30,
+            "statusMessage": "Validating shared agent setup"
+          }
+        ]
+      }
+    ]
+  }
+}

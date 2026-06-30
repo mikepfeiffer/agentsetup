@@ -7,7 +7,9 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "test": "tsc && node --test dist/test",
+    "test": "npm run test:app && npm run test:hooks",
+    "test:app": "tsc && node --test dist/test",
+    "test:hooks": "node .agent-hooks/agent-hook.test.mjs",
     "start": "node dist/src/cli.js"
   },
   "devDependencies": {

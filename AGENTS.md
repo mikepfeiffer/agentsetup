@@ -6,10 +6,11 @@
 
 ## Repo-wide conventions
 - **Language:** TypeScript / Node (Node 20+). Use explicit types on public APIs.
-  Tooling (the shared hooks) is plain Node ESM with no dependencies.
-- **Format / lint:** `npm run typecheck` in a package (placeholder for a future
+  Each example's hook tooling is plain Node ESM with no dependencies.
+- **Format / lint:** `npm run typecheck` in an example (placeholder for a future
   eslint/prettier pass).
-- **Test:** `npm run test:hooks` (hook suite) and `npm test` inside an example.
+- **Test:** `npm run test:example` from root, or `cd examples/<app> && npm test`
+  (which runs both the app tests and that example's hook tests).
 - **Commits:** Conventional Commits (`feat:`, `fix:`, `chore:`). Keep them atomic.
 - **PRs:** Small and focused. Describe what changed and why; link the issue.
 
@@ -28,8 +29,10 @@ in every session, regardless of launch directory or compaction.
 
 ## Module map
 More specific guidance lives next to the code. Read the module file before
-editing within it:
+editing within it. Each example is a self-contained project — **launch the agent
+from inside it** so its hooks are active.
 - `examples/payments-app/AGENTS.md` — the reference app (integer-cents,
   idempotent charge ledger); stricter, module-specific rules.
-- `.agent-hooks/README.md` — the shared, deterministic hook layer that both
-  Claude Code and Codex wire into (see README §5).
+- `examples/payments-app/.agent-hooks/README.md` — that example's deterministic
+  hook layer (one implementation, a `.claude/` and a `.codex/` adapter). The repo
+  root has no hooks of its own; see README §5.

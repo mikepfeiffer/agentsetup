@@ -1,12 +1,15 @@
 # payments-app — Agent Instructions
 
 Inherits the root `AGENTS.md`. The rules below are **payments-app-only** and are
-intentionally stricter than the repo defaults — this module is the reference for
-how nested, module-specific guidance layers on top of the shared root.
+intentionally stricter than the repo defaults — this is a self-contained
+reference: it carries both its own instructions and its own deterministic hooks
+(`.agent-hooks/` + the `.claude/` and `.codex/` adapters). Launch the agent from
+this directory so those hooks are active.
 
 ## Commands
 - **Build:** `npm run build` (compiles `src/` + `test/` to `dist/`).
-- **Test:** `npm test` (compiles, then runs `node --test` on `dist/test`).
+- **Test:** `npm test` (app tests via `node --test`, then the hook tests).
+- **Hook tests only:** `npm run test:hooks`.
 - **Type-check only:** `npm run typecheck`.
 
 ## Module rules

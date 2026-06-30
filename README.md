@@ -7,13 +7,18 @@ to keep one source of truth for agent instructions without symlinks.
 ### Repository layout
 
 ```text
-AGENTS.md / CLAUDE.md   # shared instruction layer (§1) — root source of truth + stub
-.agent-hooks/           # shared, deterministic hook implementation (§5)
-.claude/settings.json   # Claude Code hook adapter (§5)
-.codex/hooks.json       # Codex hook adapter (§5)
-examples/
-  payments-app/         # a small, working TypeScript app that uses both ideas
+AGENTS.md / CLAUDE.md       # shared instruction layer (§1) — root source of truth + stub
+examples/                   # each app is a self-contained project you launch into (§5)
+  payments-app/
+    AGENTS.md / CLAUDE.md   # this app's instructions (inherit root + add stricter rules)
+    .agent-hooks/           # this app's deterministic hook implementation (§5)
+    .claude/settings.json   # Claude Code hook adapter -> .agent-hooks
+    .codex/hooks.json       # Codex hook adapter        -> .agent-hooks
+    src/ test/              # a small, working TypeScript app
 ```
+
+The repo **root is documentation + the shared instruction layer**; it has no
+hooks of its own. Hooks are demonstrated **per example** (§5).
 
 ---
 
@@ -126,18 +131,42 @@ Sections 1–4 are about **guidance**. Instructions shape behavior but can't
 every matching tool call and can **block** it regardless of what the model
 "intended."
 
-The same source-of-truth principle from §1 applies to hooks. Instead of writing
-the policy twice (once for Claude Code, once for Codex) and watching the two
-copies drift, this repo keeps **one shared implementation** and wires each tool
-to it with a thin adapter:
+### Why hooks live in each example, not at the root
+
+Instructions and settings load **differently**, and this drives the whole layout:
+
+| | `AGENTS.md` / `CLAUDE.md` (instructions) | `.claude/settings.json` etc. (hooks/settings) |
+|---|---|---|
+| Loading | **Inherited upward** — the root file loads no matter which subdir you launch from. | **Launch-directory only** — read from the directory you start the agent in, **not** inherited from parents. |
+
+So a hook config sitting at the repo root would **not** fire while you work
+inside `examples/payments-app/` — only that folder's own config would. The fix
+is to **put the hooks in the project you launch into.** Each `examples/<app>/` is
+therefore a **self-contained project**: launch the agent from inside it and you
+get the **root** instructions (inherited up) **plus** that example's instructions
+**and** that example's hooks. The repo root stays documentation-only.
+
+```bash
+cd examples/payments-app
+claude      # or: codex   — now this example's hooks are active
+```
+
+A bonus: each example can wire up hooks **differently**, giving you several
+frames of reference instead of one.
+
+### Inside an example: one implementation, two thin adapters
+
+Within a single example the §1 source-of-truth principle still applies — don't
+write the policy twice and let the Claude and Codex copies drift. Keep **one**
+implementation and wire each tool to it:
 
 ```text
-.agent-hooks/
-  agent-hook.mjs        # shared implementation  (Node, zero dependencies)
-  policy.json           # shared policy rules     (the block lists)
-
-.claude/settings.json   # Claude Code adapter -> calls agent-hook.mjs
-.codex/hooks.json       # Codex adapter       -> calls agent-hook.mjs
+examples/payments-app/
+  .agent-hooks/
+    agent-hook.mjs        # shared implementation  (Node, zero dependencies)
+    policy.json           # shared policy rules     (the block lists)
+  .claude/settings.json   # Claude Code adapter -> calls agent-hook.mjs
+  .codex/hooks.json       # Codex adapter       -> calls agent-hook.mjs
 ```
 
 Both adapters invoke the **same script** in two modes:
@@ -147,17 +176,15 @@ Both adapters invoke the **same script** in two modes:
   (`.env`, `*.pem`, `id_rsa`, …), and writes into `.git/` or generated/dependency
   folders (`node_modules/`, `dist/`, `build/`, …). Safe commands like
   `git status`, `npm test`, and `dotnet build` pass through untouched.
-- **`stop-validate`** on `Stop` — a fast check that the §1 contract still holds:
-  `AGENTS.md` exists, `CLAUDE.md` is still a tiny `@AGENTS.md` stub (not a second
-  source of truth), and `.gitattributes` keeps LF normalization for `*.md`,
-  `*.json`, and `*.mjs`.
-
-### How the two tools wire in differently
+- **`stop-validate`** on `Stop` — a fast check that the example's §1 contract
+  still holds: `AGENTS.md` exists, `CLAUDE.md` is still a tiny `@AGENTS.md` stub
+  (not a second source of truth), and its `.gitattributes` keeps LF normalization
+  for `*.md`, `*.json`, and `*.mjs`.
 
 | | **Claude Code** (`.claude/settings.json`) | **Codex** (`.codex/hooks.json`) |
 |---|---|---|
 | Events | `PreToolUse` (matcher `Bash\|Read\|Edit\|Write\|MultiEdit`) + `Stop` (no matcher) | `PreToolUse` (matcher `Bash\|Edit\|Write\|apply_patch`) + `Stop` |
-| Path to script | `${CLAUDE_PROJECT_DIR}/.agent-hooks/agent-hook.mjs` (Claude substitutes the var, cross-platform) | `$(git rev-parse --show-toplevel)/.agent-hooks/...` — resolves the repo root because Codex may launch from a subdirectory |
+| Path to script | `${CLAUDE_PROJECT_DIR}/.agent-hooks/agent-hook.mjs` — the launch dir, substituted by Claude (cross-platform) | `$(git rev-parse --show-toplevel)/examples/payments-app/.agent-hooks/...` — git root + the example path, so it resolves from any subdir |
 | Windows | handled by `${CLAUDE_PROJECT_DIR}` | separate `command_windows` variant (some versions accept `commandWindows`) |
 
 The **enforcement logic is identical** because both call the same file. Change a
@@ -166,16 +193,18 @@ rule once in `policy.json` and both tools pick it up — no drift.
 ### Run the hook tests
 
 ```bash
-npm run test:hooks
+cd examples/payments-app
+npm run test:hooks      # or `npm test` to run the app tests too
 ```
 
 This runs `agent-hook.mjs` against sample Claude and Codex payloads
 (`.agent-hooks/test-fixtures/`) and asserts the right things are blocked/allowed.
-No `npm install` needed — the demo uses Node's built-in modules and **no package
-dependencies** for portability.
+The hook script itself uses **only Node built-ins, no dependencies**, for
+portability across the team's mixed-OS machines.
 
 ### Inspect what's wired up
 
+Launched from the example directory:
 - **Claude Code:** run `/hooks`.
 - **Codex:** run `/hooks`.
 
@@ -193,4 +222,5 @@ complete security control. They **supplement, but do not replace**:
 Hook scripts run **locally with the developer's own permissions**, and a
 determined process can bypass or disable them. **Review hook code before trusting
 it**, exactly as you would any other script that runs on your machine. See
-[`.agent-hooks/README.md`](.agent-hooks/README.md) for the full contract.
+[`examples/payments-app/.agent-hooks/README.md`](examples/payments-app/.agent-hooks/README.md)
+for the full contract.

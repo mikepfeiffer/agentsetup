@@ -1,0 +1,7 @@
+# Self-contained LF normalization for this example (mirrors the repo root), so
+# the folder stays a complete, copy-pasteable reference. The shared stop-validate
+# hook checks for these rules in this directory's .gitattributes.
+*.md    text eol=lf
+*.json  text eol=lf
+*.mjs   text eol=lf
+*.ts    text eol=lf

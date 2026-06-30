@@ -5,7 +5,6 @@
   "description": "Reference repo for sharing agent instructions and hooks across Claude Code and OpenAI Codex.",
   "type": "module",
   "scripts": {
-    "test:hooks": "node .agent-hooks/agent-hook.test.mjs",
     "build:example": "npm --prefix examples/payments-app run build",
     "test:example": "npm --prefix examples/payments-app test"
   }
