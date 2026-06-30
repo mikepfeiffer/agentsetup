@@ -1,16 +1,16 @@
 # Agent Setup: Shared Instructions and Guardrails for Claude Code + Codex
 
-A friendly, copy-pasteable reference for setting up AI coding agents —
-**Claude Code** and **OpenAI Codex** (or either one on its own) — so your agent:
+A friendly, copy-pasteable reference for setting up AI coding agents like
+**Claude Code** and **OpenAI Codex** (or either one on its own), so your agent:
 
-1. **follows your project's rules**, and
-2. **can't easily do risky things** — like deleting the wrong files, committing a
-   password, or hand-editing auto-generated code.
+1. **Follows your project's rules**, and
+2. **Can't easily do risky things** — like deleting the wrong files, committing a
+   password, or hand-editing auto-generated code, or
+3. **Consistently applies clean coding standards** - so your project does not drift into messy patterns and hard-to-maintain code.
 
-You don't need a software-engineering background to use this. If you "vibe code"
-— describe what you want and let the agent build it — this is how you keep the
-agent on the rails. Everything here works on **Windows and macOS**, and there are
-**two complete example apps** (one TypeScript, one C#) you can read or copy.
+The goal is simple: give your AI coding agent clear instructions, practical guardrails, and repeatable standards before it starts changing your codebase.
+
+Everything here works on Windows and macOS, with no symlinks required. The repo also includes two complete example apps (one TypeScript and one C#) that you can study, copy, or adapt for your own projects.
 
 ## The two ideas, in plain English
 
