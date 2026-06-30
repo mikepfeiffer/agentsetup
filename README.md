@@ -1,13 +1,13 @@
 # Agent Setup: Shared Instructions and Guardrails for Claude Code + Codex
 
-A friendly, copy-pasteable reference for teams using both Claude Code and OpenAI Codex on the same project, so your agent:
+This project is a reference for teams using both Claude Code and OpenAI Codex on the same repo, across both Windows and macOS, so your AI coding agents:
 
-1. **Follows your project's rules**, and
+1. **Follow your project's rules**, and
 2. **Can't easily do risky things** like deleting the wrong files, committing a
    password, or hand-editing auto-generated code, or
-3. **Consistently applies clean coding standards** so your project does not drift into messy patterns and hard-to-maintain code.
+3. **Consistently apply clean coding standards** so your project does not drift into anti-patterns and hard-to-maintain code.
 
-The goal is simple: give your AI coding agent clear instructions, practical guardrails, and repeatable standards before it starts changing your codebase.
+The goal is simple: give your AI coding agents clear instructions, practical guardrails, and repeatable standards before it starts changing your codebase.
 
 Everything here works on Windows and macOS, with no symlinks required. The repo also includes two complete example apps (one TypeScript and one C#) that you can study, copy, or adapt for your own projects.
 
